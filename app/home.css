@@ -1,0 +1,6 @@
+.arrow_button {
+    transform: translate(-20px,0px);
+}
+.gradient_color {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.59) 0%, rgba(0,0,0,0.0) 10%, rgba(0,0,0,0.0) 70%, black 100% );
+}
