@@ -28,7 +28,7 @@ const FAQSection = () => {
             aria-label="Accordion 2"
             title="Do I need an attorney when buying a home?"
           >
-            It's highly recommended to have an attorney when buying a home. A
+            It&apos;s highly recommended to have an attorney when buying a home. A
             real estate attorney can review contracts, negotiate terms, ensure
             legal compliance, and protect your interests throughout the home
             buying process.
@@ -39,7 +39,7 @@ const FAQSection = () => {
             aria-label="Accordion 3"
             title="How do I get pre-approved for a mortgage?"
           >
-            To get pre-approved for a mortgage, you'll need to submit an
+            To get pre-approved for a mortgage, you&apos;ll need to submit an
             application to a lender. They will review your credit history,
             income, assets, and debts to determine the amount you can borrow.
             Being pre-approved gives you a clearer picture of your budget and
