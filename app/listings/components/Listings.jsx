@@ -159,7 +159,7 @@ const Listings = () => {
           <div className="flex flex-col px-4 py-4 mt-3 max-md:max-w-full">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-full">
               {properties.map((property, index) => (
-                <Property property={property} />
+                <Property key={index} property={property} />
               ))}
             </div>
           </div>

@@ -47,8 +47,8 @@ const ServicesPage = () => {
             Our Services
           </div>
           <div className="mt-3 text-base leading-6 text-stone-500 max-md:max-w-full">
-            We're here to help you with every step of your property journey.
-            Whether you're buying, selling, or looking for legal advice, we have
+            We&apos;re here to help you with every step of your property journey.
+            Whether you&apos;re buying, selling, or looking for legal advice, we have
             the expertise to guide you through the process.
           </div>
         </div>

@@ -1,10 +1,10 @@
 import React from "react";
 
 const Property = ({ property }) => {
-  const { name, location, price, bedrooms, bathrooms, imageUrl } = property;
+  const { name, location, price, bedrooms, bathrooms, imageUrl, key } = property;
 
   return (
-    <div className="flex flex-col flex-1 pb-9">
+    <div key={key} className="flex flex-col flex-1 pb-9">
       <img
         loading="lazy"
         srcSet={imageUrl}

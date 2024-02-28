@@ -64,7 +64,7 @@ const LoginPage = () => {
             <Button onClick={()=> handleSubmitData()} color="secondary" className="font-semibold mt-4">Log in</Button>
            
           </div>
-            <p onClick={()=> router.push("/signup") } className="text-black text-sm text-center mt-4">Don't have an account ? <span className="font-semibold">Sign Up</span></p>
+            <p onClick={()=> router.push("/signup") } className="text-black text-sm text-center mt-4">Don&apos;t have an account ? <span className="font-semibold">Sign Up</span></p>
         </div>
       </div>
     </div>
