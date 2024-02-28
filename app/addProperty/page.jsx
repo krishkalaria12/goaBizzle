@@ -61,23 +61,24 @@ const ListYourPropertyPage = () => {
   return (
     <div className="flex flex-col items-center pb-12 bg-purple-50">
       <Navbar />
-      <div className="flex flex-col items-start mt-14">
-        <div className="justify-center items-start py-4 pr-16  mt-10 max-w-full text-3xl font-bold tracking-tighter whitespace-nowrap text-neutral-900 w-[512px] max-md:pr-5">
+      <div className="flex flex-col items-start mt-14 w-screen md:w-auto px-5">
+        <div className="justify-center items-start py-4 pr-16  mt-10 max-w-full text-3xl font-bold tracking-tighter whitespace-nowrap text-neutral-900  max-md:pr-5">
           List your property
         </div>
-        <div className="mt-3 text-base font-medium leading-6 text-neutral-900 max-md:max-w-full">
+        <div className="mt-3 text-base font-medium leading-6 text-neutral-900 max-w-full">
           Property name
         </div>
-        <Input
+        <Input color="secondary"
           type="text"
           className="mt-1"
           value={name}
+          classNames={'w-full'}
           onValueChange={(e) => dispatch(setName(e))}
         />
         <div className="mt-6 text-base font-medium leading-6 text-neutral-900 max-md:max-w-full">
           Property type
         </div>
-        <Select
+        <Select color="secondary"
           className=" text-black mt-1"
           label="Select Property Type"
           onSelectionChange={(e) => dispatch(setPropertyType(e.currentKey))}
@@ -92,7 +93,7 @@ const ListYourPropertyPage = () => {
         <div className="mt-6 text-base font-medium leading-6 text-neutral-900 max-md:max-w-full">
           City
         </div>
-        <Input
+        <Input color="secondary"
           type="text"
           className="mt-1"
           value={city}
@@ -102,7 +103,7 @@ const ListYourPropertyPage = () => {
         <div className="flex gap-4 justify-center mt-6 max-w-full text-base leading-6 whitespace-nowrap w-[480px] max-md:flex-wrap">
           <div className="flex flex-col flex-1 px-5">
             <div className="font-medium text-neutral-900">Area</div>
-            <Input
+            <Input color="secondary"
               type="text"
               className="mt-1"
               value={area}
@@ -112,7 +113,7 @@ const ListYourPropertyPage = () => {
           </div>
           <div className="flex flex-col flex-1 px-5">
             <div className="font-medium text-neutral-900">Pin code</div>
-            <Input
+            <Input color="secondary"
               type="number"
               className="mt-1"
               value={pincode}
@@ -124,11 +125,11 @@ const ListYourPropertyPage = () => {
         <div className="mt-6 text-base font-medium leading-6 text-neutral-900 max-md:max-w-full">
           Description
         </div>
-        <Textarea value={description} onValueChange={(e) => dispatch(setDescription(e))} placeholder="Write a brief description of your property" minRows={5} />
+        <Textarea color="secondary" value={description} onValueChange={(e) => dispatch(setDescription(e))} placeholder="Write a brief description of your property" minRows={5} />
         <div className="mt-6 text-base font-medium leading-6 text-neutral-900 max-md:max-w-full">
           Price
         </div>
-        <Input
+        <Input color="secondary"
               type="number"
               className="mt-1"
               value={price}
@@ -138,7 +139,7 @@ const ListYourPropertyPage = () => {
         <div className="mt-6 text-base font-medium leading-6 text-neutral-900 max-md:max-w-full">
           Number of bedrooms
         </div>
-        <Input
+        <Input color="secondary"
               type="number"
               className="mt-1"
               value={bedrooms}
@@ -148,7 +149,7 @@ const ListYourPropertyPage = () => {
         <div className="mt-6 text-base font-medium leading-6 text-neutral-900 max-md:max-w-full">
           Number of bathrooms
         </div>
-        <Input
+        <Input color="secondary"
               type="number"
               className="mt-1"
               value={bathrooms}
