@@ -18,7 +18,7 @@ const Navbar = () => {
   
 
   return (
-    <nav className="bg-purple-50 fixed text-black z-50">
+    <nav className="bg-purple-50 fixed shadow-md text-black z-50">
       <div>
         <div
           className={`flex w-screen lg:px-16 justify-between items-center lg:py-5 md:px-8 md:py-6 px-6 py-4 ${

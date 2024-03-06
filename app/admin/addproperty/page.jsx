@@ -1,6 +1,5 @@
 "use client";
-import * as React from "react";
-import Navbar from "../Components/Navbar";
+import Navbar from "@/app/Components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import {
@@ -14,10 +13,12 @@ import {
   setPropertyType,
   setBedrooms,
   setImageUrls,
-} from "../redux/features/property";
-import { setCT } from "../redux/features/currentTab";
+} from "../../redux/features/property";
+import { setCT } from "../../redux/features/currentTab";
 import Cookies from "universal-cookie";
 import { useRouter } from "next/navigation";
+import React from 'react'
+import AdminNavbar from "../components/AdminNavbar";
 
 const data = {
   propertyType: [
@@ -59,28 +60,12 @@ const ListYourPropertyPage = () => {
       bathrooms,
     };
 
-    if (cookies.get("isLoggedIn") == true) {
+    
       //User need to be logged in
-      const body = {
-        name,
-        propertyType,
-        city,
-        area,
-        pincode,
-        description,
-        price,
-        bedrooms,
-        bathrooms,
-        imageUrls,
-        user: cookies.get("user"),
-      };
+     
       console.log(body);
-    } else {
-      alert("Kindly login to request your property listing...");
-      router.push("/login");
-    }
+    
 
-    console.log(body);
   };
 
   // Function to handle image upload
@@ -112,8 +97,10 @@ const ListYourPropertyPage = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center pb-12 bg-purple-50">
-      <Navbar />
+    <div className="relative">
+    <AdminNavbar/>
+    <div className="flex flex-col items-center pb-12 bg-purple-50 z-0">
+      
       <div className="flex flex-col items-start mt-14 w-screen md:w-auto px-5">
         <div className="justify-center items-start py-4 pr-16  mt-10 max-w-full text-3xl font-bold tracking-tighter whitespace-nowrap text-neutral-900  max-md:pr-5">
           List your property
@@ -247,9 +234,10 @@ const ListYourPropertyPage = () => {
           color="secondary"
           className="mt-5 py-2 font-semibold w-full"
         >
-          Request for Listing
+          Add Property
         </Button>
       </div>
+    </div>
     </div>
   );
 };

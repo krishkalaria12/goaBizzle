@@ -11,7 +11,8 @@ const PropertySlice = createSlice({
         description: "",
         price: "",
         bedrooms: "",
-        bathrooms: ""
+        bathrooms: "",
+        imageUrls: [],
     },
     reducers : {
         setName: (state,action) => {
@@ -40,10 +41,13 @@ const PropertySlice = createSlice({
         },
         setBathrooms : (state,action) => {
             state.bathrooms = action.payload
+        },
+        setImageUrls :(state,action) => {
+            state.imageUrls = action.payload
         }
     }
 })
 
-export const { setName, setPropertyType, setCity,setArea, setPincode, setDescription, setPrice, setBedrooms, setBathrooms} = PropertySlice.actions
+export const { setName, setPropertyType, setCity,setArea, setPincode, setDescription, setPrice, setBedrooms, setBathrooms, setImageUrls} = PropertySlice.actions
 
 export default PropertySlice.reducer;
