@@ -6,6 +6,7 @@ import Cookies from "universal-cookie";
 import { FaUserCircle } from "react-icons/fa";
 import authService from "@/lib/appwrite/authconfig";
 import toast, { Toaster } from "react-hot-toast";
+import accountDetails from "@/actions/getUser";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,13 +22,18 @@ const Navbar = () => {
   const cookies = useMemo(() => new Cookies(), []);
 
   useLayoutEffect(() => {
-    const cookiesData = cookies.get("isLoggedIn");
-    if (cookiesData) {
-      setIsLoggedIn(cookiesData);
-    } else {
-      setIsLoggedIn("");
+    user()
+  }, [isLoggedIn]);
+
+  const user = async () => {
+    const data = await accountDetails();
+    if (data) {
+      setIsLoggedIn(true)
     }
-  }, [cookies]);
+    else{
+      setIsLoggedIn(false)
+    }
+  }
 
   const handleLogout = async () => {
     await authService.logout();

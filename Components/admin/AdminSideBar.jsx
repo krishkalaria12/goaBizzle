@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setTab } from '@/app/redux/features/adminNav';
+import { setTab } from '@/redux/features/adminNav';
 
 const RaiseHandIcon = () => {
     return (

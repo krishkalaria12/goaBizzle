@@ -1,78 +1,76 @@
-import React from "react";
+import React, {useState, useLayoutEffect} from "react";
 import PropertyCard from "./PropertyCard";
+import { getProductListings } from "@/actions/ListListings";
+import { updateProduct } from "@/actions/updateProduct";
+import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
-
-const property = [
-  {
-    id: 2,
-    name: "Property 2",
-    propertyType: "House",
-    city: "New York",
-    area: "Manhattan",
-    pincode: "10001",
-    description: "Beautiful house in the heart of the city.",
-    price: 1000000,
-    bedrooms: 3,
-    bathrooms: 2,
-    imageUrls: [
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj0a1aYjay11YJHYmqFrIJaK1gIyW24SC2IQ&usqp=CAU",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj0a1aYjay11YJHYmqFrIJaK1gIyW24SC2IQ&usqp=CAU",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj0a1aYjay11YJHYmqFrIJaK1gIyW24SC2IQ&usqp=CAU",
-    ],
-  },
-  {
-    id: 2,
-    name: "Property 2",
-    propertyType: "House",
-    city: "New York",
-    area: "Manhattan",
-    pincode: "10001",
-    description: "Beautiful house in the heart of the city.",
-    price: 1000000,
-    bedrooms: 3,
-    bathrooms: 2,
-    imageUrls: [
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj0a1aYjay11YJHYmqFrIJaK1gIyW24SC2IQ&usqp=CAU",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj0a1aYjay11YJHYmqFrIJaK1gIyW24SC2IQ&usqp=CAU",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj0a1aYjay11YJHYmqFrIJaK1gIyW24SC2IQ&usqp=CAU",
-    ],
-  },
-  {
-    id: 2,
-    name: "Property 2",
-    propertyType: "House",
-    city: "New York",
-    area: "Manhattan",
-    pincode: "10001",
-    description: "Beautiful house in the heart of the city.",
-    price: 1000000,
-    bedrooms: 3,
-    bathrooms: 2,
-    imageUrls: [
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj0a1aYjay11YJHYmqFrIJaK1gIyW24SC2IQ&usqp=CAU",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj0a1aYjay11YJHYmqFrIJaK1gIyW24SC2IQ&usqp=CAU",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj0a1aYjay11YJHYmqFrIJaK1gIyW24SC2IQ&usqp=CAU",
-    ],
-  },
-];
+import { deleteProperty } from "@/actions/deleteProperty";
 
 const PropertiesTab = () => {
-    const router = useRouter();
-  return (
-    <div className="p-2 h-full overflow-scroll">
-      <div className="p-3 flex justify-between items-center">
-        <h1 className="text-black font-semibold text-xl">Manage Properties</h1>
-        <button onClick={() => router.push("/admin/addproperty")} className="text-purple-600 font-semibold bg-purple-200 rounded px-4 py-2 ">
-          Add Property
-        </button>
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
+  const router = useRouter()
+
+  useLayoutEffect(() => {
+    fetchProducts();
+  }, [])
+
+  const fetchProducts = async() => {
+    const response = await getProductListings();
+    if (response) {
+      setData(response.documents)
+      setLoading(false)
+    }
+    else{ 
+      setLoading(false);
+    }
+  }
+
+  if (loading) {
+    return <h1 className="h-screen flex justify-center items-center text-3xl font-bold">Loading</h1>
+  }
+
+  const handleEditSubmit = async (editedProduct) => {
+    const data = await updateProduct(editedProduct)
+    if (data) {
+      setData((prevData) =>
+      prevData.map((product) =>
+        product.$id === editedProduct.productId ? editedProduct : product
+      )
+    );
+    toast.success("Product Updated successfully")
+    }
+    else{
+      toast.error("Failed to update product")
+    }
+  };
+
+  const handleRemove = async (productId) => {
+    const res = await deleteProperty(productId);
+    if (res) {
+      const updatedData = data.filter((product) => product.$id !== productId);
+      setData(updatedData);
+    }
+  }
+
+    return (
+      <>
+        <Toaster position="top-right" />
+      <div className="p-2 h-full overflow-scroll">
+        <div className="p-3 flex justify-between items-center">
+          <h1 className="text-black font-semibold text-xl">Manage Properties</h1>
+          <button onClick={() => router.push("/admin/addproperty")} className="text-purple-600 font-semibold bg-purple-200 rounded px-4 py-2 ">
+            Add Property
+          </button>
+        </div>
+        <div>
+          {
+            data && data.map((product, index) => <PropertyCard onReject={handleRemove} reject={true} area={product.area} pincode={product.pincode} edit={true} url={product.url} onEditSubmit={handleEditSubmit} section={"product"} name={product.name} bathrooms={product.bathrooms} productId={product.$id} bedrooms={product.bedrooms} propertyType={product.propertyType} city={product.city} description={product.description} email={product.email} price={product.price} key={product.$id} />)
+          }
+        </div>
       </div>
-      <div>
-        {
-            property.map((prop) => <PropertyCard property={prop}/>)
-        }
-      </div>
-    </div>
-  );
+      </>
+    );
 };
 
 export default PropertiesTab;

@@ -1,21 +1,51 @@
-import React from "react";
+import React from 'react';
+import { Box, Image, Text, Badge, Stack } from '@chakra-ui/react';
 
 const Property = ({ property }) => {
-  const { name, city, area, price, bedrooms, bathrooms, imageUrl, key } = property;
+  const { name, city, area, price, bedrooms, description, bathrooms, url, key } = property;
 
   return (
-    <div key={key} className="flex flex-col flex-1 pb-9">
-      <img
+    <Box
+      key={key}
+      borderWidth="1px"
+      borderRadius="lg"
+      overflow="hidden"
+      boxShadow="lg"
+      p={4}
+      mb={8}
+      bg="white"
+      width={{ base: '100%', md: '100%'}} // Responsive width
+    >
+      <Image
         loading="lazy"
-        srcSet={imageUrl}
-        className="self-center w-full h-48 rounded object-cover"
+        src={url[0]}
         alt={name}
+        objectFit="cover"
+        height="200px"
+        width="100%"
+        mb={4}
       />
-      <div className="mt-3 text-base font-medium leading-6 text-neutral-900">
-        {`${name} - ${price} - ${bedrooms}BR/${bathrooms}BA`}
-      </div>
-      <div className="text-sm leading-5 text-stone-500">{`${area}, ${city}`}</div>
-    </div>
+      <Text fontSize="xl" fontWeight="semibold" mb={2}>
+        {name}
+      </Text>
+      <Stack direction="column" spacing={2} mb={4}>
+        <Badge colorScheme="purple" fontSize="lg">
+          Price: ${price}
+        </Badge>
+        <Badge colorScheme="blue" fontSize="lg">
+          {`${bedrooms} BR / ${bathrooms} BA`}
+        </Badge>
+        <Badge colorScheme="green" fontSize="lg">
+          Area: {area}
+        </Badge>
+      </Stack>
+      <Text fontSize="sm" color="gray.500" mb={4}>
+        {`${city}`}
+      </Text>
+      <Text fontSize="sm" color="gray.700" overflow="hidden" textOverflow="ellipsis">
+        {description}
+      </Text>
+    </Box>
   );
 };
 

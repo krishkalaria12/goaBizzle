@@ -1,50 +1,142 @@
-import React from 'react'
+import React, { useState } from "react";
+import {
+  Box,
+  Center,
+  Image,
+  Flex,
+  Badge,
+  Text,
+  Button,
+} from "@chakra-ui/react";
+import { FaTimes, FaCheck } from "react-icons/fa";
+import ProductModal from "./ProductModal";
 
-const PropertyCard = ({property}) => {
-    const handleRemove = (id) => {
-        //Remove from the database
-    }
+const PropertyCard = ({
+  name,
+  description,
+  price,
+  bedrooms,
+  bathrooms,
+  propertyType,
+  city,
+  email,
+  onReject,
+  reject,
+  productId,
+  onAccept,
+  section,
+  pincode,
+  edit = false,
+  onEditSubmit,
+  area,
+  url,
+}) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleEditClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
   return (
-    <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md my-3">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="flex justify-center items-center">
-          <div className="h-64 w-full">
-            <img
-              src={property.imageUrls[0]}
-              alt={`Property ${property.id} Image 1`}
-              className="object-cover h-full w-full"
-            />
-          </div>
-        </div>
-        <div className="p-4">
-          <h2 className="text-xl font-semibold">{property.name}</h2>
-          <p className="text-gray-700 mb-2">{property.propertyType}</p>
-          <p className="text-gray-700 mb-2">
-            {property.city}, {property.area}, {property.pincode}
-          </p>
-          <p className="text-gray-700 mb-4">{property.description}</p>
-          <p className="text-gray-700 mb-2">Price: ${property.price}</p>
-          <p className="text-gray-700 mb-2">Bedrooms: {property.bedrooms}</p>
-          <p className="text-gray-700 mb-2">Bathrooms: {property.bathrooms}</p>
-        </div>
-      </div>
-     
-      <div className="flex justify-between p-4">
-        <button
-          onClick={() => {}}
-          className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none"
-        >
-          Edit 
-        </button>
-        <button
-          onClick={() => handleRemove(property.id)}
-          className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none"
-        >
-          Remove
-        </button>
-      </div>
-    </div>
-  )
-}
+    <Center>
+      <Box
+        p="4"
+        borderWidth="1px"
+        borderRadius="md"
+        overflow="hidden"
+        boxShadow="lg"
+        bg="white"
+        color="black"
+        w="100%"
+        mt="4"
+      >
+        <Flex>
+          <Image
+            borderRadius="md"
+            alt={name}
+            src={url[0]}
+            boxSize="250px"
+            mr="4"
+          />
+          <Box flex="1">
+            <Flex align="baseline" mb={2}>
+              <Badge colorScheme="pink">{propertyType}</Badge>
+            </Flex>
+            <Text fontSize="xl" fontWeight="bold" color="pink.800" mb={2}>
+              {city} &bull; {area}
+            </Text>
+            <Text fontSize="xl" fontWeight="bold" color="teal.800" mb={2}>
+              {email}
+            </Text>
+            <Text fontSize="xl" fontWeight="semibold" lineHeight="short" mb={4}>
+              {description}
+            </Text>
+            <Text fontSize="xl" fontWeight="semibold" mb={2}>
+              Price - ₹{price}
+            </Text>
+            <Flex align="center" mb={2}>
+              <Text fontSize="lg" mr={4}>
+                <b>Bedrooms:</b> {bedrooms}
+              </Text>
+              <Text fontSize="lg">
+                <b>Bathrooms:</b> {bathrooms}
+              </Text>
+            </Flex>
+            {section === "request" && (
+              <Flex justify="center" mb={2}>
+                <FaTimes
+                  className="text-red-500 text-2xl cursor-pointer mr-2"
+                  onClick={() => onReject(productId)}
+                />
+                <FaCheck
+                  className="text-green-500 text-2xl cursor-pointer"
+                  onClick={() => onAccept(productId)}
+                />
+              </Flex>
+            )}
+            <Flex justify={"center"} gap={"1rem"}>
+              {edit && (
+                <Flex justify="center" mt={4}>
+                  <Button onClick={handleEditClick} colorScheme={"teal"} >
+                    Edit
+                  </Button>
+                </Flex>
+              )}
+              {reject && (
+                <Flex justify="center" mt={4}>
+                  <Button onClick={() => onReject(productId)} colorScheme={"red"} >
+                    Remove
+                  </Button>
+                </Flex>
+              )}
+            </Flex>
+          </Box>
+        </Flex>
+        <ProductModal
+          isOpen={isModalOpen}
+          onClose={handleModalClose}
+          product={{
+            name,
+            description,
+            price,
+            bedrooms,
+            bathrooms,
+            propertyType,
+            city,
+            email,
+            pincode,
+            area,
+            productId, // Make sure productId is passed
+          }}
+          onSubmit={onEditSubmit}
+        />
+      </Box>
+    </Center>
+  );
+};
 
-export default PropertyCard
+export default PropertyCard;
