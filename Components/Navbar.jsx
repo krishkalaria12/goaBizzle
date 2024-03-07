@@ -1,23 +1,51 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useMemo, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 import Cookies from "universal-cookie";
+import { FaUserCircle } from "react-icons/fa";
+import authService from "@/lib/appwrite/authconfig";
+import toast, { Toaster } from "react-hot-toast";
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const cookies = new Cookies();
-  const [isLoggedIn, setIsLoggedIn] = useState(cookies.get("isLoggedIn") || "");
+  const [isLoggedIn, setIsLoggedIn] = useState();
+  const [isDropDown, setisDropDown] = useState(false);
   const router = useRouter();
   const ct = useSelector(e => e.currentTB.current)
 
   const toggleMenu = () => {
-    console.log("Toggling Menu");
     setIsOpen(!isOpen);
   };
 
-  
+  const cookies = useMemo(() => new Cookies(), []);
+
+  useLayoutEffect(() => {
+    const cookiesData = cookies.get("isLoggedIn");
+    if (cookiesData) {
+      setIsLoggedIn(cookiesData);
+    } else {
+      setIsLoggedIn("");
+    }
+  }, [cookies]);
+
+  const handleLogout = async () => {
+    await authService.logout();
+    cookies.set("isLoggedIn", false);
+    cookies.set("user", null);
+    toast.success("Successfully logged out");
+    setTimeout(() => {
+      router.push("/login");
+    }, 1000);
+  };
+
+  const handleLoggedInDropdown = () => {
+    setisDropDown((prev) => !prev);
+  };
 
   return (
+    <>
+      <Toaster position="top-right" />
     <nav className="bg-purple-50 fixed shadow-md text-black z-50">
       <div>
         <div
@@ -104,26 +132,40 @@ const Navbar = () => {
             </div>
             {/* Need to update with profile picture in future*/}
             <div>
-              {isLoggedIn != true ? (
-                <button onClick={()=> router.push("/login")} className=" px-2 py-1 font-semibold bg-purple-200 rounded">
-                  Login
-                </button>
-              ) : (
-                <>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="#000"
-                    className="w-8 h-8 text-black"
+            {isLoggedIn == true && (
+                  <div
+                    className="relative inline-block"
+                    onClick={handleLoggedInDropdown}
                   >
-                    <path
-                      fillRule="evenodd"
-                      d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </>
-              )}
+                    <FaUserCircle className="w-8 h-8 cursor-pointer" />
+
+                    {isDropDown && (
+                      <div className="absolute right-4 mt-2 w-32 p-2 bg-white border border-gray-300 rounded shadow">
+                        <ul>
+                          <li>
+                            <p className="py-1 dark:text-pink-600 cursor-pointer text-pink-500 font-bold">
+                              My Account
+                            </p>
+                          </li>
+                          <li
+                            onClick={handleLogout}
+                            className="py-1 dark:text-pink-600 cursor-pointer font-bold text-pink-500"
+                          >
+                            Logout
+                          </li>
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
+                {isLoggedIn != true && (
+                  <button
+                    onClick={() => router.push("/login")}
+                    className=" px-2 py-1 font-semibold bg-purple-200 rounded"
+                  >
+                    Login
+                  </button>
+                )}
             </div>
           </div>
         </div>
@@ -156,6 +198,7 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
+    </>
   );
 };
 

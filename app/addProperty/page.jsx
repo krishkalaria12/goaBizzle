@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import Navbar from "../Components/Navbar";
+import Navbar from "@/Components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import {
@@ -14,10 +14,13 @@ import {
   setPropertyType,
   setBedrooms,
   setImageUrls,
-} from "../redux/features/property";
-import { setCT } from "../redux/features/currentTab";
+} from "@/redux/features/property";
+import { setCT } from "@/redux/features/currentTab";
 import Cookies from "universal-cookie";
 import { useRouter } from "next/navigation";
+import toast, { Toaster } from "react-hot-toast";
+import { createListing } from "@/actions/createListing";
+import accountDetails from "@/actions/getUser";
 
 const data = {
   propertyType: [
@@ -45,43 +48,60 @@ const ListYourPropertyPage = () => {
   const imageUrls = useSelector((e) => e.property.imageUrls);
   const cookies = new Cookies();
   const router = useRouter();
+  const [loading, setIsLoading] = React.useState(true);
+  const [user,setUser] = React.useState();
 
-  const handleSubmitData = () => {
-    const body = {
+  const handleSubmitData = async () => {
+    const data = {
       name,
       propertyType,
       city,
       area,
       pincode,
       description,
-      price,
-      bedrooms,
-      bathrooms,
+      price: parseInt(price),
+      bedrooms: parseInt(bedrooms),
+      bathrooms: parseInt(bathrooms),
+      email: user.email,
+      username: user.name,
+      phone: user.phone,
+      url: imageUrls,
     };
 
-    if (cookies.get("isLoggedIn") == true) {
-      //User need to be logged in
-      const body = {
-        name,
-        propertyType,
-        city,
-        area,
-        pincode,
-        description,
-        price,
-        bedrooms,
-        bathrooms,
-        imageUrls,
-        user: cookies.get("user"),
-      };
-      console.log(body);
-    } else {
-      alert("Kindly login to request your property listing...");
-      router.push("/login");
-    }
 
-    console.log(body);
+    const createListingData = await createListing(data);
+    if (createListingData) {
+      toast.success("Your Request for Listing has been created!")
+      dispatch(setName(""));
+      dispatch(setPropertyType(""));
+      dispatch(setCity(""));
+      dispatch(setArea(""));
+      dispatch(setPincode(""));
+      dispatch(setDescription(""));
+      dispatch(setPrice(""));
+      dispatch(setBedrooms(""));
+      dispatch(setBathrooms(""));
+    }
   };
+
+  React.useLayoutEffect(() => {
+    getUser()
+  }, []);
+
+  const getUser = async () => {
+    const user = await accountDetails();
+    if (user) {
+      setUser(user)
+      setIsLoading(false)
+    }
+    else{
+      router.push("/")
+    }
+  }
+
+  if (loading==true) {
+    return <h1 className="flex justify-center items-center text-3xl font-bold min-h-screen">Loading</h1>
+  }
 
   // Function to handle image upload
   const handleImageUpload = async (event) => {
@@ -107,11 +127,9 @@ const ListYourPropertyPage = () => {
     console.log(updatedUrls);
   };
 
-  React.useEffect(() => {
-    dispatch(setCT("addproperty"));
-  }, []);
-
   return (
+    <>
+      <Toaster />
     <div className="flex flex-col items-center pb-12 bg-purple-50">
       <Navbar />
       <div className="flex flex-col items-start mt-14 w-screen md:w-auto px-5">
@@ -251,6 +269,7 @@ const ListYourPropertyPage = () => {
         </Button>
       </div>
     </div>
+    </>
   );
 };
 

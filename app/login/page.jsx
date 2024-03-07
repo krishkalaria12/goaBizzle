@@ -1,73 +1,129 @@
 "use client";
-import * as React from "react";
-import { Button, Input } from "@nextui-org/react";
+import { useLayoutEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import Button from "@/Components/forms/Button";
+import Input from "@/Components/forms/Input";
 import { useRouter } from "next/navigation";
+import authService from "@/lib/appwrite/authconfig";
 import Cookies from "universal-cookie";
+import toast, { Toaster } from "react-hot-toast";
+import accountDetails from "@/actions/getUser";
 
 const LoginPage = () => {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const { register, handleSubmit } = useForm();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+
   const router = useRouter();
   const cookies = new Cookies();
 
-  const handleSubmitData = () => {
-    const body = {email,password}
-    //get user details from backend and store in cookies
-    const data = {
-        fullName: "Aswin Raaj P S",
-        email: email,
-        phoneNumber: "1234567890"
+  const loginMethod = async (data) => {
+    setError("");
+    try {
+      const session = await authService.login(data);
+      if (session) {
+        const userData = await authService.getCurrentUser();
+        if (userData) {
+          cookies.set("user", data);
+          cookies.set("isLoggedIn", true);
+          toast.success("Successfully logged in");
+          setTimeout(() => {
+            router.push("/");
+          }, 1000);
+        }
+      }
+    } catch (error) {
+      setError(error.message);
     }
-    console.log(body)
-    cookies.set("user",data)
-    cookies.set("isLoggedIn","true")
-    console.log(body)
-    //If successful, navigate to home page
-    router.push("/");
+  };
+
+  useLayoutEffect(() => {
+    getUser()
+  })
+
+  const getUser = async () => {
+    const user = await accountDetails();
+    if (user) {
+      router.push("/")
+      setLoading(false)
+    }
+  }
+
+  if (loading==true) {
+    return <h1 className="flex justify-center items-center text-3xl font-bold min-h-screen">Loading</h1>
   }
 
   return (
-    <div className="flex flex-col justify-center bg-white">
-      <div className="flex justify-center items-center px-16 py-5 w-full bg-white max-md:px-5 max-md:max-w-full">
-        <div className="flex flex-col pt-8 pb-12 max-w-full w-[512px]">
-          <div className="flex flex-col px-4 max-md:max-w-full">
-            <div className="flex flex-col justify-center bg-white max-md:max-w-full">
-              <img
-                loading="lazy"
-                src="https://cdn.audleytravel.com/1080/770/79/15984870-goa-beach-goa.webp"
-                className="w-full aspect-[2.22] max-md:max-w-full rounded"
-              />
+    <>
+      <Toaster position="top-right" />
+      <div className="flex flex-col justify-center bg-white">
+        <div className="flex justify-center items-center px-16 py-5 w-full bg-white max-md:px-5 max-md:max-w-full">
+          <div className="flex flex-col pt-8 pb-12 max-w-full w-[512px]">
+            <div className="flex flex-col px-4 max-md:max-w-full">
+              <div className="flex flex-col justify-center bg-white max-md:max-w-full">
+                <img
+                  loading="lazy"
+                  alt="Login Beach Photo"
+                  src="https://cdn.audleytravel.com/1080/770/79/15984870-goa-beach-goa.webp"
+                  className="w-full aspect-[2.22] max-md:max-w-full rounded"
+                />
+              </div>
+              <div className="mt-8 text-2xl font-bold tracking-tight text-neutral-900 max-md:max-w-full">
+                Log in to your account
+              </div>
+
+              {error && (
+                <p className="text-red-600 mt-8 text-center">{error}</p>
+              )}
+              <form onSubmit={handleSubmit(loginMethod)} className="mt-8">
+                <div className="space-y-5">
+                  <Input
+                    label="Email: "
+                    placeholder="Enter your email"
+                    type="email"
+                    id="email"
+                    autoComplete="email"
+                    {...register("email", {
+                      required: true,
+                      validate: {
+                        matchPatern: (value) =>
+                          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(
+                            value
+                          ) || "Email address must be a valid address",
+                      },
+                    })}
+                  />
+                  <Input
+                    label="Password: "
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    placeholder="Enter your password"
+                    {...register("password", {
+                      required: true,
+                    })}
+                  />
+                  <Button
+                    type="submit"
+                    color="secondary"
+                    className="w-full font-semibold"
+                  >
+                    Sign in
+                  </Button>
+                </div>
+              </form>
             </div>
-            <div className="mt-8 text-2xl font-bold tracking-tight text-neutral-900 max-md:max-w-full">
-              Log in to your account
-            </div>
-            <div className="mt-6 text-base font-medium leading-6 text-neutral-900 max-md:max-w-full">
-              Email
-            </div>
-            <Input
-              type="text"
-              className="mt-1"
-              value={email}
-              placeholder="abc@example.com"
-              onValueChange={(e) => setEmail(e)}
-            />
-            <div className="mt-6 text-base font-medium leading-6 text-neutral-900 max-md:max-w-full">
-              Password
-            </div>
-            <Input
-              type="password"
-              className="mt-1"
-              value={password}
-              placeholder="******"
-              onValueChange={(e) => setPassword(e)}
-            />
-            <Button onClick={()=> handleSubmitData()} color="secondary" className="font-semibold mt-4">Log in</Button>
-           
+            <p
+              onClick={() => router.push("/signup")}
+              className="text-black text-sm text-center mt-4"
+            >
+              Don&apos;t have an account ?{" "}
+              <span className="font-semibold cursor-pointer">Sign Up</span>
+            </p>
           </div>
-            <p onClick={()=> router.push("/signup") } className="text-black text-sm text-center mt-4">Don&apos;t have an account ? <span className="font-semibold">Sign Up</span></p>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

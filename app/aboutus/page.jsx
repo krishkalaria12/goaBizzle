@@ -1,8 +1,8 @@
 "use client"
 import React, { useEffect } from "react";
-import Navbar from "../Components/Navbar";
+import Navbar from "@/Components/Navbar";
 import { useDispatch } from "react-redux";
-import { setCT } from "../redux/features/currentTab";
+import { setCT } from "@/redux/features/currentTab";
 
 const AboutUs = () => {
         const dispatch = useDispatch();

@@ -1,12 +1,12 @@
 "use client"
 import * as React from "react";
-import Navbar from "./Components/Navbar";
-import Footer from "./Components/footer/Footer";
-import Banner from "./Components/Banner";
-import FeaturedProperties from "./Components/featuredProperties/FeaturedProperties";
-import Testimonials from "./Components/testimonials/Testimonials";
+import Navbar from "@/Components/Navbar";
+import Footer from "@/Components/footer/Footer";
+import Banner from "@/Components/Banner";
+import FeaturedProperties from "@/Components/featuredProperties/FeaturedProperties";
+import Testimonials from "@/Components/testimonials/Testimonials";
 import { useDispatch } from "react-redux";
-import { setCT } from "./redux/features/currentTab";
+import { setCT } from "@/redux/features/currentTab";
 
 // Sample data for properties (replace it with your actual data)
 const sampleJSONdata = {

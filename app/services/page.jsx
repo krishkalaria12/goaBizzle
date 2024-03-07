@@ -1,11 +1,11 @@
 'use client'
 import * as React from "react";
-import Navbar from "../Components/Navbar";
+import Navbar from "@/Components/Navbar";
 import { useDispatch } from "react-redux";
-import { setCT } from "../redux/features/currentTab";
-import ServiceSection from "./Components/ServiceSection";
-import FAQSection from "./Components/FAQSection";
-import Footer from "../Components/footer/Footer";
+import { setCT } from "@/redux/features/currentTab";
+import ServiceSection from "@/Components/services/ServiceSection";
+import FAQSection from "@/Components/services/FAQSection";
+import Footer from "@/Components/footer/Footer";
 
 const services = [
     {

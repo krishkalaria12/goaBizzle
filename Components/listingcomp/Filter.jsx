@@ -15,7 +15,9 @@ import {
   setLocation,
   setPriceRange,
   setPropertyType,
-} from "@/app/redux/features/filterSlice";
+  setCity,
+  setArea,
+} from "@/redux/features/filterSlice";
 
 const data = {
   propertyType: [
@@ -33,7 +35,7 @@ const Filter = ({ stateFunc }) => {
   const dispatch = useDispatch();
   const filterState = useSelector(state => state.filter);
 
-  const { name, propertyType, priceRange, bedrooms, bathrooms, allProperties, location } = filterState;
+  const { name, propertyType, priceRange, bedrooms, bathrooms, allProperties, city, area } = filterState;
 
   const filterProperties = () => {
     const filtered = allProperties.filter((property) => {
@@ -50,10 +52,8 @@ const Filter = ({ stateFunc }) => {
       if (
         location &&
         !(
-          property.location.area.toLowerCase().includes(location.toLowerCase()) ||
-          property.location.city.toLowerCase().includes(location.toLowerCase()) ||
-          property.location.state.toLowerCase().includes(location.toLowerCase()) ||
-          property.location.country.toLowerCase().includes(location.toLowerCase())
+          property.area.toLowerCase().includes(area.toLowerCase()) ||
+          property.city.toLowerCase().includes(city.toLowerCase())
         )
       ) {
         return false;

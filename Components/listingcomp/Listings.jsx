@@ -1,12 +1,12 @@
 "use client";
-import { setName } from "@/app/redux/features/filterSlice";
+import { setName } from "@/redux/features/filterSlice";
 import { Input } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Property from "./Property";
 import Filter from "./Filter";
-import { setFilteredProperties } from "@/app/redux/features/filterSlice";
-import { setCT } from "@/app/redux/features/currentTab";
+import { setFilteredProperties } from "@/redux/features/filterSlice";
+import { setCT } from "@/redux/features/currentTab";
 
 const SearchIcon = () => (
   <svg
@@ -78,13 +78,7 @@ const Listings = () => {
             .includes(location.toLowerCase()) ||
           property.location.city
             .toLowerCase()
-            .includes(location.toLowerCase()) ||
-          property.location.state
-            .toLowerCase()
-            .includes(location.toLowerCase()) ||
-          property.location.country
-            .toLowerCase()
-            .includes(location.toLowerCase())
+            .includes(location.toLowerCase()) 
         )
       ) {
         return false;
