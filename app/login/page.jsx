@@ -1,5 +1,5 @@
 "use client";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "@/Components/forms/Button";
 import Input from "@/Components/forms/Input";
@@ -37,14 +37,17 @@ const LoginPage = () => {
     }
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     getUser()
-  })
+  },[])
 
   const getUser = async () => {
     const user = await accountDetails();
     if (user) {
       router.push("/")
+      setLoading(false)
+    }
+    else {
       setLoading(false)
     }
   }
