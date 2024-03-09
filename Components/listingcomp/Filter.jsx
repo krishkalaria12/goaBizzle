@@ -35,7 +35,7 @@ const Filter = ({ stateFunc }) => {
   const dispatch = useDispatch();
   const filterState = useSelector(state => state.filter);
 
-  const { name, propertyType, priceRange, bedrooms, bathrooms, allProperties, city, area } = filterState;
+  const { name, propertyType, priceRange, bedrooms, bathrooms, allProperties, city, area,location } = filterState;
 
   const filterProperties = () => {
     const filtered = allProperties.filter((property) => {
@@ -52,8 +52,8 @@ const Filter = ({ stateFunc }) => {
       if (
         location &&
         !(
-          property.area.toLowerCase().includes(area.toLowerCase()) ||
-          property.city.toLowerCase().includes(city.toLowerCase())
+          property.area.toLowerCase().includes(location.toLowerCase()) ||
+          property.city.toLowerCase().includes(location.toLowerCase())
         )
       ) {
         return false;
