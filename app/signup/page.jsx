@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import authService from "@/lib/appwrite/authconfig";
 import { useForm } from "react-hook-form";
@@ -48,14 +48,17 @@ const SignUpPage = () => {
     }
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     getUser()
-  })
+  },[])
 
   const getUser = async () => {
     const user = await accountDetails();
     if (user) {
       router.push("/")
+      setLoading(false)
+    }
+    else{
       setLoading(false)
     }
   }
