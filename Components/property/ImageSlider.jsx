@@ -12,8 +12,9 @@ const ImageSlider = ({ imageUrls }) => {
         dynamicHeight={false}
         autoPlay={true}
       >
-        {imageUrls.map((url) => (
+        {imageUrls.map((url, idx) => (
           <img
+          key={idx}
             loading="lazy"
             srcSet={url}
             className="w-full object-contain aspect-[2.94] max-md:max-w-full"

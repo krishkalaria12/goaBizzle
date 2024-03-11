@@ -1,45 +1,51 @@
 "use client";
 import Navbar from "@/Components/Navbar";
+import NotFound from "@/Components/NotFound";
 import ImageSlider from "@/Components/property/ImageSlider";
+import { getProduct } from "@/actions/getProduct";
 import { setCT } from "@/redux/features/currentTab";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaMailBulk, FaPhone, FaUser } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-
-const property = {
-  id: 5,
-  name: "Modern Office Space",
-  propertyType: "Office",
-  description: "This 3-bedroom semi-detached house is located in a quiet neighborhood in Vagator. The house has been renovated recently and features a modern kitchen, spacious living room, and a large private garden. The master bedroom has an en-suite bathroom and the other two bedrooms share a bathroom. The house is only 10 minutes drive from Vagator Beach and 5 minutes from the main road with shops and restaurants. Please note that this is a semi-furnished property and does not include ACs or white goods.",
-  sqft: "1500",
-    area: "Margao",
-    city: "South Goa",
-    state: "Goa",
-    country: "India",
-  price: 1000000,
-  bedrooms: 3,
-  bathrooms: 2,
-  imageUrls:
-    [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoX0In-r5_WMQgQtkpNsqLYDdTyjH-4RR0rA&usqp=CAU",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoX0In-r5_WMQgQtkpNsqLYDdTyjH-4RR0rA&usqp=CAU",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoX0In-r5_WMQgQtkpNsqLYDdTyjH-4RR0rA&usqp=CAU",
-    ],
-    userName : "Michelle Fernandes",
-    email: "test@gmail.com",
-    phonenumber: "+911234567890"
-};
 
 const PropertyPage = ({ params }) => {
 //params.id will give the id of the property, fetch the details of the property from the id and assign it to property variable
 
     const dispatch = useDispatch()
+    const [loading, setLoading] = useState(true);
+    const [property, setProperty] = useState();
+    const [wrongSlug, setWrongSlug] = useState();
+    const propertyId = params.id;
 
     useEffect(()=>{
         dispatch(setCT("listings"));
+        fetchProductThroughServer();
     },[])
+
+      const fetchProductThroughServer = async () => {
+        try {
+          const { data, wrongSlug } = await getProduct(propertyId);
+          if (data) {
+            setProperty(data)
+          }
+          setWrongSlug(wrongSlug);
+          setLoading(false);
+        } catch (error) {
+          console.log(error);
+          setLoading(false);
+        }
+      }
+      
+    if (wrongSlug) {
+      return <NotFound />;
+    }
+
+    if (loading) {
+      return <h1 className="flex justify-center items-center text-3xl font-bold min-h-screen">Loading</h1>
+    }
+
   return (
-    <div className="flex flex-col justify-center bg-purple-50">
+    property!=null && (<div className="flex flex-col justify-center bg-purple-50">
       <div className="flex flex-col items-center pb-5 w-full bg-white max-md:max-w-full">
         <Navbar />
         <div className="flex flex-col px-4 mt-24 w-full max-w-[960px] max-md:max-w-full ">
@@ -122,7 +128,7 @@ const PropertyPage = ({ params }) => {
         </div>
       </div>
     </div>
-  );
+  ));
 };
 
 export default PropertyPage;
