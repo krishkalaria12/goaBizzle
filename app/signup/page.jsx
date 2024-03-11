@@ -7,10 +7,12 @@ import Cookies from "universal-cookie";
 import Button from "@/Components/forms/Button";
 import Input from "@/Components/forms/Input";
 import toast, { Toaster } from "react-hot-toast";
+import accountDetails from "@/actions/getUser";
 
 const SignUpPage = () => {
   const router = useRouter();
   const cookies = new Cookies();
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
