@@ -1,6 +1,6 @@
 "use client";
 import Navbar from "@/Components/Navbar";
-import NotFound from "@/Components/NotFound";
+import NotFound from "@/app/not-found";
 import ImageSlider from "@/Components/property/ImageSlider";
 import { getProduct } from "@/actions/getProduct";
 import { setCT } from "@/redux/features/currentTab";
