@@ -107,7 +107,6 @@ const Listings = () => {
 
       return true;
     });
-    console.log(filtered);
     dispatch(setFilteredProperties(filtered)); // Update filtered properties in Redux state
   };
   const handleSubmit = () => {

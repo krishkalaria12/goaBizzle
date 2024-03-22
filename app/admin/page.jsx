@@ -9,6 +9,7 @@ import Cookies from "universal-cookie";
 import accountDetails from "@/actions/getUser";
 import { useRouter } from "next/navigation"
 import authService from "@/lib/appwrite/authconfig";
+import toast, { Toaster } from "react-hot-toast";
 import { Flex, Box, Input, Button, Heading } from '@chakra-ui/react';
 
 const AdminPanelPage = () => {
@@ -44,11 +45,12 @@ const AdminPanelPage = () => {
     if (session) {
       const user = await accountDetails();
       console.log(user);
-      if (user.labels.length > 0 && user.labels[0]=="admin") {
+      if (user!=null && user.length > 0 && user.labels.length > 0 && user.labels[0]=="admin") {
         setIsAuthenticated(true)
         cookie.set('isAdmin',true)
       }
       else {
+        toast.error("You are not an admin")
         router.push("/")
       }
     }
@@ -61,6 +63,7 @@ const AdminPanelPage = () => {
   return (
     <div className="h-screen relative bg-purple-50">
       <AdminNavbar />
+      <Toaster position="top-right" />
       {isAuthenticated ? (
         <div className="min-w-screen flex pt-14 h-full">
           <div className="hidden md:block h-full">
