@@ -6,7 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { deleteProperty } from "@/actions/deleteProperty";
 
-const PropertiesTab = () => {
+function PropertiesTab() {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
   const router = useRouter()

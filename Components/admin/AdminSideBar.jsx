@@ -34,7 +34,7 @@ const RaiseHandIcon = () => {
     );
   };
 
-const AdminSideBar = ({setIsModelOpen}) => {
+function AdminSideBar({setIsModelOpen}) {
     const dispatch = useDispatch();
   const currentTab = useSelector((e) => e.adminNav.currentTab)
   return (

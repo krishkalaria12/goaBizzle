@@ -5,7 +5,7 @@ import toast, {Toaster} from "react-hot-toast";
 import { AcceptRequest } from "@/actions/AcceptRequest";
 import { deletePost } from "@/actions/DeleteRequest";
 
-const RequestsTab = () => {
+function RequestsTab() {
 
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)

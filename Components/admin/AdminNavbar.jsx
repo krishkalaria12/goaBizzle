@@ -47,7 +47,7 @@ const CloseIcon = () => {
 
 
 
-const AdminNavbar = () => {
+function AdminNavbar() {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const cookies = new Cookies()
 
