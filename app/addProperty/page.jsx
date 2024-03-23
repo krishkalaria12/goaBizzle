@@ -14,6 +14,7 @@ import {
   setPropertyType,
   setBedrooms,
   setImageUrls,
+  setSqft,
 } from "@/redux/features/property";
 import { setCT } from "@/redux/features/currentTab";
 import Cookies from "universal-cookie";
@@ -46,6 +47,7 @@ const ListYourPropertyPage = () => {
   const bedrooms = useSelector((e) => e.property.bedrooms);
   const bathrooms = useSelector((e) => e.property.bathrooms);
   const imageUrls = useSelector((e) => e.property.imageUrls);
+  const sqft = useSelector((e) => e.property.sqft);
   const cookies = new Cookies();
   const router = useRouter();
   const [loading, setIsLoading] = React.useState(true);
@@ -193,8 +195,19 @@ const ListYourPropertyPage = () => {
           placeholder="North Goa"
           onValueChange={(e) => dispatch(setCity(e))}
         />
+        <div className="mt-6 text-base font-medium leading-6 text-neutral-900 max-md:max-w-full">
+          Square Feet
+        </div>
+        <Input
+          color="secondary"
+          type="number"
+          className="mt-1"
+          value={sqft}
+          placeholder="500"
+          onValueChange={(e) => dispatch(setSqft(e))}
+        />
         <div className="flex gap-4 justify-center mt-6 max-w-full text-base leading-6 whitespace-nowrap w-[480px] max-md:flex-wrap">
-          <div className="flex flex-col flex-1 px-5">
+          <div className="flex flex-col flex-1 ">
             <div className="font-medium text-neutral-900">Area</div>
             <Input
               color="secondary"
@@ -205,7 +218,7 @@ const ListYourPropertyPage = () => {
               onValueChange={(e) => dispatch(setArea(e))}
             />
           </div>
-          <div className="flex flex-col flex-1 px-5">
+          <div className="flex flex-col flex-1">
             <div className="font-medium text-neutral-900">Pin code</div>
             <Input
               color="secondary"

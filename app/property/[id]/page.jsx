@@ -26,6 +26,7 @@ const PropertyPage = ({ params }) => {
         try {
           const { data, wrongSlug } = await getProduct(propertyId);
           if (data) {
+            console.log(data)
             setProperty(data)
           }
           setWrongSlug(wrongSlug);
@@ -94,7 +95,7 @@ const PropertyPage = ({ params }) => {
             <FaUser/>
             <div className="flex flex-col justify-center my-auto">
               <div className="text-base font-medium whitespace-nowrap text-neutral-900">
-                {property.userName}
+                {property.username}
               </div>
               <div className="text-sm text-stone-500">Property agent</div>
             </div>

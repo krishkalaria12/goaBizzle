@@ -5,6 +5,10 @@ import Link from 'next/link';
 
 const Property = ({ property }) => {
   const { name, city, area, price, bedrooms, description, bathrooms, url, key, $id } = property;
+<<<<<<< HEAD
+=======
+  console.log(property.$id)
+>>>>>>> 97eeb908a65d54e4116da16dc90e9ba6bf75f1fe
   //Navigate to /property/id on click
 
   const router = useRouter();
@@ -20,7 +24,7 @@ const Property = ({ property }) => {
       mb={8}
       bg="white"
       width={{ base: '100%', md: '100%'}} // Responsive width
-      onClick={() => router.push("/property/12")}
+      onClick={() => router.push(`/property/${$id}`)}
     >
       <Image
         loading="lazy"
