@@ -47,7 +47,7 @@ const AdminPanelPage = () => {
     const session = await authService.login(data);
     if (session) {
       const user = await accountDetails();
-      if (user!=null && user.length > 0 && user.labels.length > 0 && user.labels[0]=="admin") {
+      if (user && user.labels && user.labels.length > 0 && user.labels.includes("admin")) {
         setIsAuthenticated(true)
         cookie.set('isAdmin',true)
       }

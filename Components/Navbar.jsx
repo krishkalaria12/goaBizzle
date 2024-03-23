@@ -12,6 +12,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState();
   const [isDropDown, setisDropDown] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const router = useRouter();
   const ct = useSelector(e => e.currentTB.current)
 
@@ -28,7 +29,12 @@ const Navbar = () => {
   const user = async () => {
     const data = await accountDetails();
     if (data) {
-      setIsLoggedIn(true)
+      if (data.labels && data.labels.length > 0 && data.labels.includes("admin")) {
+        setIsAdmin(true);
+        setIsLoggedIn(true);
+      }else {
+        setIsLoggedIn(true)
+      }
     }
     else{
       setIsLoggedIn(false)
@@ -93,12 +99,16 @@ const Navbar = () => {
                     About Us
                   </span>
                 </li>
-                
                 <li onClick={()=> router.push("/addProperty")}>
                   <button className="px-2 py-1 bg-purple-500 text-white font-semibold rounded-lg text-md">
                     List your property
                   </button>
                 </li>
+                {isAdmin && <li onClick={()=> router.push("/admin")}>
+                  <button className="px-2 py-1 bg-purple-500 text-white font-semibold rounded-lg text-md">
+                    Admin
+                  </button>
+                </li>}
               </ul>
               <div className="lg:hidden text-purple-500">
                 <button onClick={toggleMenu}>
@@ -193,7 +203,7 @@ const Navbar = () => {
               <li onClick={()=>router.push("/addProperty")} className="px-4 py-2 ">
                 <p className="p-2 rounded-md cursor-pointer hover:bg-purple-500">List your Property</p>
               </li>
-              {isLoggedIn && <li onClick={()=>router.push("/admin")} className="px-4 py-2 ">
+              {isAdmin && <li onClick={()=>router.push("/admin")} className="px-4 py-2 ">
                 <p className="p-2 rounded-md cursor-pointer hover:bg-purple-500">Admin</p>
               </li>}
             </ul>
