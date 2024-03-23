@@ -26,6 +26,7 @@ const PropertyPage = ({ params }) => {
         try {
           const { data, wrongSlug } = await getProduct(propertyId);
           if (data) {
+            console.log(data)
             setProperty(data)
           }
           setWrongSlug(wrongSlug);
@@ -49,7 +50,7 @@ const PropertyPage = ({ params }) => {
       <div className="flex flex-col items-center pb-5 w-full bg-white max-md:max-w-full">
         <Navbar />
         <div className="flex flex-col px-4 mt-24 w-full max-w-[960px] max-md:max-w-full ">
-          <ImageSlider imageUrls={property.imageUrls}/>
+          <ImageSlider imageUrls={property.url}/>
           <div className="mt-2 text-2xl font-bold tracking-tight text-neutral-900 max-md:max-w-full">
             {property.name}
           </div>
@@ -94,7 +95,7 @@ const PropertyPage = ({ params }) => {
             <FaUser/>
             <div className="flex flex-col justify-center my-auto">
               <div className="text-base font-medium whitespace-nowrap text-neutral-900">
-                {property.userName}
+                {property.username}
               </div>
               <div className="text-sm text-stone-500">Property agent</div>
             </div>

@@ -3,7 +3,8 @@ import { Box, Image, Text, Badge, Stack } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 
 const Property = ({ property }) => {
-  const { name, city, area, price, bedrooms, description, bathrooms, url, key } = property;
+  const { name, city, area, price, bedrooms, description, bathrooms, url, key, $id } = property;
+  console.log(property.$id)
   //Navigate to /property/id on click
 
   const router = useRouter();
@@ -18,7 +19,7 @@ const Property = ({ property }) => {
       mb={8}
       bg="white"
       width={{ base: '100%', md: '100%'}} // Responsive width
-      onClick={() => router.push("/property/12")}
+      onClick={() => router.push(`/property/${$id}`)}
     >
       <Image
         loading="lazy"

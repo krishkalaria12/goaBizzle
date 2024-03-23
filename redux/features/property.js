@@ -5,6 +5,7 @@ const PropertySlice = createSlice({
     initialState: {
         name: "",
         propertyType: "",
+        sqft: "",
         city: "",
         area: "",
         pincode: "",
@@ -44,10 +45,13 @@ const PropertySlice = createSlice({
         },
         setImageUrls :(state,action) => {
             state.imageUrls = action.payload
+        },
+        setSqft : (state,action) => {
+            state.sqft = action.payload
         }
     }
 })
 
-export const { setName, setPropertyType, setCity,setArea, setPincode, setDescription, setPrice, setBedrooms, setBathrooms, setImageUrls} = PropertySlice.actions
+export const { setName, setPropertyType, setCity,setArea, setPincode, setDescription, setPrice, setBedrooms, setBathrooms, setImageUrls, setSqft} = PropertySlice.actions
 
 export default PropertySlice.reducer;
