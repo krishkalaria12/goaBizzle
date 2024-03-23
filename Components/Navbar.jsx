@@ -193,7 +193,9 @@ const Navbar = () => {
               <li onClick={()=>router.push("/addProperty")} className="px-4 py-2 ">
                 <p className="p-2 rounded-md cursor-pointer hover:bg-purple-500">List your Property</p>
               </li>
-             
+              {isLoggedIn && <li onClick={()=>router.push("/admin")} className="px-4 py-2 ">
+                <p className="p-2 rounded-md cursor-pointer hover:bg-purple-500">Admin</p>
+              </li>}
             </ul>
           </div>
         </div>

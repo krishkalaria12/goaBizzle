@@ -7,10 +7,10 @@ import RequestsTab from "@/Components/admin/RequestsTab";
 import PropertiesTab from "@/Components/admin/PropertiesTab";
 import Cookies from "universal-cookie";
 import accountDetails from "@/actions/getUser";
-import { useRouter } from "next/navigation"
 import authService from "@/lib/appwrite/authconfig";
 import toast, { Toaster } from "react-hot-toast";
 import { Flex, Box, Input, Button, Heading } from '@chakra-ui/react';
+import { useRouter } from "next/navigation";
 
 const AdminPanelPage = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -18,7 +18,7 @@ const AdminPanelPage = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(true);
   const cookie = new Cookies();
-  const router = useRouter()
+  const router = useRouter();
   const currentTab = useSelector(e => e.adminNav.currentTab)
 
   useLayoutEffect(()=>{
@@ -29,7 +29,6 @@ const AdminPanelPage = () => {
     try {
         setLoading(true); // Set loading to true while fetching data
         const data = await accountDetails();
-        console.log(data);
         if (data && data.labels && data.labels.length > 0 && data.labels.includes("admin")) {
             setIsAuthenticated(true);
         }
