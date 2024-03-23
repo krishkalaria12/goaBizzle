@@ -148,11 +148,6 @@ const Navbar = () => {
                     {isDropDown && (
                       <div className="absolute right-4 mt-2 w-32 p-2 bg-white border border-gray-300 rounded shadow">
                         <ul>
-                          <li>
-                            <p className="py-1 dark:text-pink-600 cursor-pointer text-pink-500 font-bold">
-                              My Account
-                            </p>
-                          </li>
                           <li
                             onClick={handleLogout}
                             className="py-1 dark:text-pink-600 cursor-pointer font-bold text-pink-500"
@@ -184,19 +179,19 @@ const Navbar = () => {
           <div className={`   backdrop-opacity-5  `}>
             <ul className="flex-col  text-black gap-10 ">
             <li onClick={()=>router.push("/")} className="px-4 py-2 ">
-                <p className="p-2 rounded-md hover:bg-purple-500">Home</p>
+                <p className="p-2 rounded-md cursor-pointer hover:bg-purple-500">Home</p>
               </li>
               <li onClick={()=>router.push("/listings")} className="px-4 py-2 ">
-                <p className="p-2 rounded-md hover:bg-purple-500">Listings</p>
+                <p className="p-2 rounded-md cursor-pointer hover:bg-purple-500">Listings</p>
               </li>
               <li onClick={()=>router.push("/services")} className="px-4 py-2 ">
-                <p className="p-2 rounded-md hover:bg-purple-500">Services</p>
+                <p className="p-2 rounded-md cursor-pointer hover:bg-purple-500">Services</p>
               </li>
               <li onClick={()=>router.push("/aboutus")} className="px-4 py-2 ">
-                <p className="p-2 rounded-md hover:bg-purple-500">About Us</p>
+                <p className="p-2 rounded-md cursor-pointer hover:bg-purple-500">About Us</p>
               </li>
               <li onClick={()=>router.push("/addProperty")} className="px-4 py-2 ">
-                <p className="p-2 rounded-md hover:bg-purple-500">List your Property</p>
+                <p className="p-2 rounded-md cursor-pointer hover:bg-purple-500">List your Property</p>
               </li>
              
             </ul>

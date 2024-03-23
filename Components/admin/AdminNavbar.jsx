@@ -2,7 +2,7 @@
 import { setTab } from "@/redux/features/adminNav";
 import { useState } from "react";
 import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import AdminSideBar from "./AdminSideBar";
 import authService from "@/lib/appwrite/authconfig";
 import Cookies from "universal-cookie";
@@ -50,6 +50,7 @@ const CloseIcon = () => {
 function AdminNavbar() {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const cookies = new Cookies()
+  const router = useRouter();
 
   const handleLogout = async () => {
     await authService.logout();

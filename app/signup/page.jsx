@@ -27,7 +27,6 @@ const SignUpPage = () => {
       const userData = await authService.createAccount(data);
       if (userData) {
         const userData = await authService.getCurrentUser();
-        console.log(userData);
         if (userData) {
           const phoneNumber = "+91" + data.phone;
           const updatePhone = await authService.updatePhoneNumber(

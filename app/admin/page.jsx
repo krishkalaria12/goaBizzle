@@ -26,15 +26,19 @@ const AdminPanelPage = () => {
   },[setIsAuthenticated])
 
   const user = async () => {
-    const data = await accountDetails();
-    if (data) {
-      setIsAuthenticated(true)
-      setLoading(false)
+    try {
+        setLoading(true); // Set loading to true while fetching data
+        const data = await accountDetails();
+        console.log(data);
+        if (data && data.labels && data.labels.length > 0 && data.labels.includes("admin")) {
+            setIsAuthenticated(true);
+        }
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+    } finally {
+        setLoading(false); // Set loading to false regardless of success or failure
     }
-    else {
-      setLoading(false)
-    }
-  }
+  };
 
   const handleSubmit = async () =>{
     const data = {
@@ -44,7 +48,6 @@ const AdminPanelPage = () => {
     const session = await authService.login(data);
     if (session) {
       const user = await accountDetails();
-      console.log(user);
       if (user!=null && user.length > 0 && user.labels.length > 0 && user.labels[0]=="admin") {
         setIsAuthenticated(true)
         cookie.set('isAdmin',true)
@@ -62,7 +65,7 @@ const AdminPanelPage = () => {
 
   return (
     <div className="h-screen relative bg-purple-50">
-      <AdminNavbar />
+    {isAuthenticated && <AdminNavbar />}
       <Toaster position="top-right" />
       {isAuthenticated ? (
         <div className="min-w-screen flex pt-14 h-full">

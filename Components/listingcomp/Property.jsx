@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
 import { Box, Image, Text, Badge, Stack } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const Property = ({ property }) => {
-  const { name, city, area, price, bedrooms, description, bathrooms, url, key } = property;
+  const { name, city, area, price, bedrooms, description, bathrooms, url, key, $id } = property;
   //Navigate to /property/id on click
 
   const router = useRouter();
   return (
-    <Box
+    <Link href={`/property/${$id}`}>
+      <Box
       key={key}
       borderWidth="1px"
       borderRadius="lg"
@@ -49,7 +51,8 @@ const Property = ({ property }) => {
       <Text fontSize="sm" color="gray.700" overflow="hidden" textOverflow="ellipsis">
         {description}
       </Text>
-    </Box>
+      </Box>
+    </Link>
   );
 };
 

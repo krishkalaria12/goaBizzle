@@ -120,7 +120,7 @@ const Listings = () => {
     filterProperties();
   }, [name]);
 
-
+  console.log(properties);
 
   return (
     <div className="relative">

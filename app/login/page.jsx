@@ -32,6 +32,10 @@ const LoginPage = () => {
           }, 1000);
         }
       }
+      else {
+        toast.error("Invalid credentials");
+        setError("Invalid credentials");
+      }
     } catch (error) {
       setError(error.message);
     }

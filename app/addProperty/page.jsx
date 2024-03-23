@@ -81,6 +81,7 @@ const ListYourPropertyPage = () => {
       dispatch(setPrice(""));
       dispatch(setBedrooms(""));
       dispatch(setBathrooms(""));
+      dispatch(setImageUrls([]));
     }
   };
 
@@ -124,7 +125,6 @@ const ListYourPropertyPage = () => {
     }
     const updatedUrls = [...imageUrls, ...newUrls];
     dispatch(setImageUrls(updatedUrls));
-    console.log(updatedUrls);
   };
 
   return (

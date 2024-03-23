@@ -28,6 +28,7 @@ const Banner = () => {
       <div className="flex overflow-hidden relative flex-col justify-end items-center px-16 pt-4 rounded-xl h-1/2 lg:min-h-[480px] max-md:px-5 max-md:max-w-full">
         <Image
           src={HomePageBG}
+          priority={true}
           className="object-cover absolute inset-0 size-full"
         />
         <div className="flex relative flex-col justify-center px-4 py-12 max-w-full w-[667px]">
