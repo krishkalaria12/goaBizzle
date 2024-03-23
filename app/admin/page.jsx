@@ -10,7 +10,6 @@ import accountDetails from "@/actions/getUser";
 import authService from "@/lib/appwrite/authconfig";
 import toast, { Toaster } from "react-hot-toast";
 import { Flex, Box, Input, Button, Heading } from '@chakra-ui/react';
-import { useRouter } from "next/navigation";
 
 const AdminPanelPage = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -18,7 +17,6 @@ const AdminPanelPage = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(true);
   const cookie = new Cookies();
-  const router = useRouter();
   const currentTab = useSelector(e => e.adminNav.currentTab)
 
   useLayoutEffect(()=>{
@@ -53,7 +51,6 @@ const AdminPanelPage = () => {
       }
       else {
         toast.error("You are not an admin")
-        router.push("/")
       }
     }
   }
