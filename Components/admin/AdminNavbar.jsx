@@ -2,7 +2,7 @@
 import { setTab } from "@/redux/features/adminNav";
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import AdminSideBar from "./AdminSideBar";
 import authService from "@/lib/appwrite/authconfig";
 import Cookies from "universal-cookie";
