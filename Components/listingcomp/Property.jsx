@@ -5,11 +5,6 @@ import Link from 'next/link';
 
 const Property = ({ property }) => {
   const { name, city, area, price, bedrooms, description, bathrooms, url, key, $id } = property;
-<<<<<<< HEAD
-=======
-  console.log(property.$id)
->>>>>>> 97eeb908a65d54e4116da16dc90e9ba6bf75f1fe
-  //Navigate to /property/id on click
 
   const router = useRouter();
   return (
